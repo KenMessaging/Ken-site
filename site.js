@@ -21,6 +21,12 @@ if (menu && links) {
       menu.focus();
     }
   });
+  document.addEventListener("click", (event) => {
+    if (!menu.contains(event.target) && !links.contains(event.target)) {
+      menu.setAttribute("aria-expanded", "false");
+      links.classList.remove("is-open");
+    }
+  });
 }
 const preview = document.querySelector("#plan-preview");
 if (preview) {
@@ -37,12 +43,34 @@ if (preview) {
     bitcoin: "Bitcoin (BTC)"
   };
   const cryptoOptions = document.querySelector("#crypto-options");
+  const cryptoDuration = document.querySelector("#crypto-duration");
+  const subscriptionPlans = document.querySelector("#subscription-plans");
+  const months = document.querySelector("#prepaid-months");
+  const recipient = document.querySelector("#recipient-username");
+  const prepaidPrice = count => Math.floor(count / 12) * 48 + (count % 12) * 8;
+  for (let count = 1; count <= 24; count++) {
+    months.add(new Option(`${count} ${count === 1 ? "month" : "months"} — €${prepaidPrice(count)}`, String(count)));
+  }
+  const accountSummary = document.querySelector("#summary-recipient");
+  const renderRecipient = () => {
+    accountSummary.textContent = recipient.validity.valid && recipient.value.trim()
+      ? recipient.value.trim() : "Choose a recipient";
+  };
+  recipient.addEventListener("input", renderRecipient);
   const render = () => {
     const cryptoSelected = preview.elements.namedItem("method").value === "crypto";
     cryptoOptions.hidden = !cryptoSelected;
     cryptoOptions.disabled = !cryptoSelected;
+    cryptoDuration.hidden = !cryptoSelected;
+    cryptoDuration.disabled = !cryptoSelected;
+    subscriptionPlans.hidden = cryptoSelected;
+    subscriptionPlans.disabled = cryptoSelected;
     const data = new FormData(preview);
-    const plan = plans[data.get("plan")];
+    const count = Number(months.value);
+    const plan = cryptoSelected
+      ? { name: `${count} prepaid ${count === 1 ? "month" : "months"}`, price: `€${prepaidPrice(count)} once`,
+          detail: "One-time prepaid access. No automatic renewal. Payments are not connected." }
+      : plans[data.get("plan")];
     document.querySelector("#summary-plan").textContent = plan.name;
     document.querySelector("#summary-price").textContent = plan.price;
     document.querySelector("#summary-detail").textContent = plan.detail;
@@ -57,4 +85,5 @@ if (preview) {
     document.querySelector("#preview-status").textContent = "Payments are not available. Nothing was submitted, charged or activated.";
   });
   render();
+  renderRecipient();
 }
