@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Explore planned Ken+ encrypted storage: 30 GB and Ken Cloud at €8 per month or €48 per year. Preview only; payments are disabled."><meta name="theme-color" content="#8E1B3A"><title>Ken+ — More room for what matters</title><link rel="icon" href="ken-logo.png" type="image/png"><link rel="stylesheet" href="styles.css"><script src="site.js" defer></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Explore planned Ken+ encrypted storage: 30 GB and Ken Cloud at €8 per month or €48 per year. Preview only; payments are disabled."><meta name="theme-color" content="#8E1B3A"><title>Ken+ — More room for what matters</title><link rel="icon" href="ken-logo.png" type="image/png"><link rel="stylesheet" href="styles.css?v=20261105-rates"><script src="site.js?v=20261105-rates" defer></script></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="announcement">Ken+ preview. Payments, storage and cloud backups are not live.</div>
@@ -15,18 +15,27 @@
       </div></fieldset>
       <fieldset id="crypto-duration" hidden disabled><legend>Choose how many months</legend><label class="field-label" for="prepaid-months">Prepaid months</label><select id="prepaid-months" name="months"></select><p class="hint">1–24 months. Each full 12-month block costs €48; additional months cost €8 each. For the lowest price over a year, choose a full 12-month block: 11 months cost €88, while 12 months cost €48. A one-time payment, with no automatic renewal. These are EUR preview prices, not cryptocurrency quotes.</p></fieldset>
       <fieldset><legend>02. What's planned</legend><div class="feature-grid" style="grid-template-columns:1fr;gap:12px"><article class="feature" style="min-height:0"><h3>Your encrypted media album.</h3><p>30 GB for supported photos and videos, encrypted on your device before upload. A simple four-column gallery to keep your memories together.</p></article><article class="feature" style="min-height:0"><h3>Ken Cloud.</h3><p>Planned encrypted backups for supported messages, contacts and settings, for a phone move or an extra copy. Recovery and device transfer are not available yet. Ken Cloud quota details will be published before purchase.</p></article></div></fieldset>
-      <fieldset><legend>03. Future payment options</legend><p class="hint">For design preview only. Availability, providers and regions are not confirmed. No live rates or payment quotes are shown.</p><div class="payment-methods">
+      <fieldset><legend>03. Future payment options</legend><p class="hint">For design preview only. Availability, providers and regions are not confirmed. Live crypto estimates are not guaranteed payment quotes.</p><div class="payment-methods">
         <label class="option"><input type="radio" name="method" value="card" checked><span class="option-content"><strong>Debit or credit card</strong><small>Planned · provider not connected</small></span></label>
         <label class="option"><input type="radio" name="method" value="bank"><span class="option-content"><strong>Bank payment</strong><small>Planned · availability to be confirmed</small></span></label>
         <label class="option"><input type="radio" name="method" value="crypto" aria-controls="crypto-options"><span class="option-content"><strong>Cryptocurrency</strong><small>Explore planned currencies and networks</small></span></label>
       </div></fieldset>
-      <fieldset id="crypto-options" hidden disabled><legend>Choose a cryptocurrency</legend><p class="hint">Planned options only. Choose both the currency and its network. No wallet address, exchange rate or payment request is generated.</p><div class="payment-methods">
+      <fieldset id="crypto-options" hidden disabled><legend>Choose a cryptocurrency</legend><p class="hint">Planned options only. Choose both the currency and its network. No wallet address or payment request is generated.</p><div class="payment-methods">
         <label class="option"><input type="radio" name="crypto" value="solana-usdc" checked><span class="option-content"><strong>USDC</strong><small>Solana network</small></span></label>
         <label class="option"><input type="radio" name="crypto" value="solana-eurc"><span class="option-content"><strong>EURC</strong><small>Solana network</small></span></label>
         <label class="option"><input type="radio" name="crypto" value="ethereum-usdc"><span class="option-content"><strong>USDC</strong><small>Ethereum network</small></span></label>
         <label class="option"><input type="radio" name="crypto" value="monero"><span class="option-content"><strong>Monero (XMR)</strong><small>Monero network</small></span></label>
         <label class="option"><input type="radio" name="crypto" value="bitcoin"><span class="option-content"><strong>Bitcoin (BTC)</strong><small>Bitcoin network</small></span></label>
       </div></fieldset>
+      <section id="crypto-estimate" class="estimate-card" hidden aria-labelledby="estimate-heading">
+        <h3 id="estimate-heading">Your eight-minute estimate.</h3>
+        <p id="estimate-amount" class="estimate-amount">No estimate yet.</p>
+        <p id="estimate-rate" class="hint"></p>
+        <p id="estimate-timer" class="hint" role="timer" aria-live="off"></p>
+        <p id="estimate-status" class="hint" role="status" aria-live="polite"></p>
+        <button id="refresh-estimate" class="button small" type="button">Get live estimate</button>
+        <p class="hint">CoinGecko supplies market rates. Your browser contacts it when you choose crypto or request a new estimate, exposing your IP address but not your username. The estimate is frozen for eight minutes, not a reserved exchange rate. Network fees, provider charges and price changes are not covered. No payment is accepted.</p>
+      </section>
       <section><h3>For you. Or someone you care about.</h3><label class="field-label" for="recipient-username">Recipient's Ken username</label><input id="recipient-username" type="text" minlength="3" maxlength="32" pattern="[A-Za-z0-9_]{3,32}" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="recipient-help" placeholder="Their Ken username"><p class="hint" id="recipient-help">Use your own username or the person you want to give Ken+ to. Preview only: no account lookup or activation takes place. Never enter a password, PIN or recovery key.</p><p class="hint">The planned benefit belongs to the recipient account and cannot be transferred after activation. A future purchase must link the entitlement to that account; a username does not make payment anonymous. Providers and public blockchains may retain transaction records.</p></section>
       <section><h3>If you stop subscribing.</h3><p class="hint">The proposed policy is to remove unpaid stored media after two years without renewal. It is not an implemented retention guarantee. Exact deadlines, notice, export, backup deletion and reactivation rules must be finalized before subscriptions open.</p><p class="hint">Cancellation, refunds, withdrawal rights, recurring-payment consent and applicable regional rules will be stated before you can buy. No blanket waiver of statutory consumer rights applies to this preview.</p></section>
     </form>

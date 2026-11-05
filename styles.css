@@ -1,5 +1,9 @@
 :root{color-scheme:light;--bg:#FBF7F4;--surface:#F3EAE6;--ink:#2A1A1D;--muted:#715E64;--wine:#8E1B3A;--wine-dark:#68132B;--line:#E4D7D1;--teal:#2E7D74;--gold:#E4C891;--radius:28px;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-synthesis:none}
 .field-label{display:block;font-weight:600;margin-bottom:10px}
+.estimate-card{padding:22px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+.estimate-amount{font-size:clamp(20px,4vw,27px);font-weight:600;overflow-wrap:anywhere}
+.checkout-form section{min-width:0}
+#recipient-username{box-sizing:border-box;min-width:0;font-size:16px}
 #recipient-username,#prepaid-months{display:block;width:100%;max-width:100%;min-height:48px;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--bg);color:var(--ink);font:inherit;margin-bottom:12px}
 .order-card dd{overflow-wrap:anywhere;min-width:0}
 .menu-button{color:var(--wine-dark);white-space:nowrap;flex-shrink:0;align-items:center;gap:10px;min-height:44px}
