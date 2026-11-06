@@ -28,8 +28,10 @@ if (menu && links) {
     }
   });
 }
-const preview = document.querySelector("#plan-preview");
+const preview = document.querySelector("#plan-preview, #donation-preview");
 if (preview) {
+  const donation = preview.id === "donation-preview";
+  if (donation) document.querySelector("#donation-check").disabled = false;
   const plans = {
     monthly: { name: "Monthly", price: "€8 / month", detail: "€8 per month. Billing is not connected." },
     annual: { name: "Annual", price: "€48 / year", detail: "€48 per year, equivalent to €4 per month. Saves 50% versus 12 monthly payments." }
@@ -47,6 +49,13 @@ if (preview) {
   const subscriptionPlans = document.querySelector("#subscription-plans");
   const months = document.querySelector("#prepaid-months");
   const recipient = document.querySelector("#recipient-username");
+  const customAmount = document.querySelector("#custom-amount");
+  const donationAmount = () => {
+    const choice = preview.elements.namedItem("amount").value;
+    if (choice !== "custom") return Number(choice);
+    if (!customAmount.validity.valid || !customAmount.value) return null;
+    return Number(customAmount.value);
+  };
   const estimateCard = document.querySelector("#crypto-estimate");
   const estimateAmount = document.querySelector("#estimate-amount");
   const estimateRate = document.querySelector("#estimate-rate");
@@ -96,7 +105,12 @@ if (preview) {
     const key = estimateKey;
     const currency = preview.elements.namedItem("crypto").value;
     const coin = coins[currency];
-    const euros = prepaidPrice(Number(months.value));
+    const euros = donation ? donationAmount() : prepaidPrice(Number(months.value));
+    if (euros === null) {
+      estimateAmount.textContent = "Enter a valid donation amount.";
+      estimateStatus.textContent = "Choose an amount from €1 to €100,000, with up to two decimal places.";
+      return;
+    }
     const controller = new AbortController();
     estimateRequest = controller;
     refreshEstimate.disabled = true;
@@ -121,7 +135,7 @@ if (preview) {
       estimate = { until: Date.now() + duration, started: performance.now(), duration };
       const quantity = (units / 10 ** coin.digits)
         .toLocaleString("en", { maximumFractionDigits: coin.digits });
-      estimateAmount.textContent = `≈ ${quantity} ${coin.symbol} for €${euros}`;
+      estimateAmount.textContent = `≈ ${quantity} ${coin.symbol} for ${formatEuro(euros)}`;
       estimateRate.textContent = `${cryptocurrencies[currency]} · 1 ${coin.symbol} ≈ €${rate.toLocaleString("en", { maximumFractionDigits: 6 })}. Source updated ${new Date(timestamp * 1000).toLocaleTimeString()}.`;
       estimateStatus.textContent = "Preview estimate only. Not a guaranteed payment quote.";
       updateTimer();
@@ -141,27 +155,39 @@ if (preview) {
   };
   refreshEstimate.addEventListener("click", loadEstimate);
   document.addEventListener("visibilitychange", updateTimer);
+  const formatEuro = value => new Intl.NumberFormat("en", { style: "currency", currency: "EUR" }).format(value);
   const prepaidPrice = count => Math.floor(count / 12) * 48 + (count % 12) * 8;
-  for (let count = 1; count <= 24; count++) {
-    months.add(new Option(`${count} ${count === 1 ? "month" : "months"} — €${prepaidPrice(count)}`, String(count)));
+  if (months) {
+    for (let count = 1; count <= 24; count++) {
+      months.add(new Option(`${count} ${count === 1 ? "month" : "months"} — €${prepaidPrice(count)}`, String(count)));
+    }
   }
-  const accountSummary = document.querySelector("#summary-recipient");
   const renderRecipient = () => {
-    accountSummary.textContent = recipient.validity.valid && recipient.value.trim()
+    document.querySelector("#summary-recipient").textContent = recipient.validity.valid && recipient.value.trim()
       ? recipient.value.trim() : "Choose a recipient";
   };
-  recipient.addEventListener("input", renderRecipient);
+  if (recipient) recipient.addEventListener("input", renderRecipient);
   const render = () => {
     const cryptoSelected = preview.elements.namedItem("method").value === "crypto";
     cryptoOptions.hidden = !cryptoSelected;
     cryptoOptions.disabled = !cryptoSelected;
-    cryptoDuration.hidden = !cryptoSelected;
-    cryptoDuration.disabled = !cryptoSelected;
-    subscriptionPlans.hidden = cryptoSelected;
-    subscriptionPlans.disabled = cryptoSelected;
+    if (!donation) {
+      cryptoDuration.hidden = !cryptoSelected;
+      cryptoDuration.disabled = !cryptoSelected;
+      subscriptionPlans.hidden = cryptoSelected;
+      subscriptionPlans.disabled = cryptoSelected;
+    } else {
+      const customSelected = preview.elements.namedItem("amount").value === "custom";
+      customAmount.disabled = !customSelected;
+      document.querySelector("#custom-amount-field").hidden = !customSelected;
+    }
     const data = new FormData(preview);
-    const count = Number(months.value);
-    const plan = cryptoSelected
+    const count = months ? Number(months.value) : null;
+    const amount = donation ? donationAmount() : null;
+    const plan = donation
+      ? { name: "One-time donation", price: amount === null ? "Choose an amount" : `${formatEuro(amount)} once`,
+          detail: "Donation preview only. Nothing will be charged." }
+      : cryptoSelected
       ? { name: `${count} prepaid ${count === 1 ? "month" : "months"}`, price: `€${prepaidPrice(count)} once`,
           detail: "One-time prepaid access. No automatic renewal. Payments are not connected." }
       : plans[data.get("plan")];
@@ -173,7 +199,7 @@ if (preview) {
       : methods[data.get("method")];
     document.querySelector("#preview-status").textContent = "";
     estimateCard.hidden = !cryptoSelected;
-    const key = cryptoSelected ? `${data.get("crypto")}:${count}` : "";
+    const key = cryptoSelected ? `${data.get("crypto")}:${donation ? amount : count}` : "";
     if (key !== estimateKey) {
       estimateKey = key;
       clearEstimate();
@@ -181,10 +207,13 @@ if (preview) {
     }
   };
   preview.addEventListener("change", render);
+  if (customAmount) customAmount.addEventListener("input", render);
   preview.addEventListener("submit", (event) => {
     event.preventDefault();
-    document.querySelector("#preview-status").textContent = "Payments are not available. Nothing was submitted, charged or activated.";
+    document.querySelector("#preview-status").textContent = donation
+      ? "Donations are not available yet. Nothing was submitted or charged."
+      : "Payments are not available. Nothing was submitted, charged or activated.";
   });
   render();
-  renderRecipient();
+  if (recipient) renderRecipient();
 }

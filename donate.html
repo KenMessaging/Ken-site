@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore planned ways to support Ken with a one-time donation. Preview only; donations are not yet accepted.">
+  <meta name="theme-color" content="#8E1B3A">
+  <title>Support Ken — A little closer. A lot more private.</title>
+  <link rel="icon" href="ken-logo.png" type="image/png">
+  <link rel="stylesheet" href="styles.css?v=20261106-donate">
+  <script src="site.js?v=20261106-donate" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="announcement">A little support goes a long way. <span>Donation preview; payments are not live.</span></div>
+<header class="header"><nav class="wrap navigation" aria-label="Main navigation"><a class="brand" href="./" aria-label="Ken home"><img src="ken-logo.png" width="36" height="36" alt="">Ken</a><button class="menu-button" aria-expanded="false" aria-controls="nav-links">Menu</button><div class="nav-links" id="nav-links"><a href="./">Back to Ken</a><a href="donate.html" aria-current="page">Support Ken</a><a class="plus-link" href="ken-plus.html">Ken+</a></div></nav></header>
+<main class="wrap" id="main">
+  <section class="payment-hero">
+    <p class="eyebrow">Help Ken grow.</p>
+    <h1>A little support.<br>A lot of <em>heart.</em></h1>
+    <p class="intro">If you'd like to help support Ken, you can explore the planned options for a one-time donation here. Thank you for being part of the journey.</p>
+    <p class="notice"><strong>Preview only.</strong> Donations are not available yet. No payment provider or wallet is connected, and nothing on this page charges or submits a payment.</p>
+  </section>
+  <div class="checkout-grid">
+    <form class="checkout-form" id="donation-preview" novalidate>
+      <fieldset><legend>01. Choose an amount</legend><p class="hint">A one-time contribution in euros. This is a preview, not a payment.</p><div class="plans">
+        <label class="option"><input type="radio" name="amount" value="5" checked><span class="option-content"><strong>€5</strong></span></label>
+        <label class="option"><input type="radio" name="amount" value="10"><span class="option-content"><strong>€10</strong></span></label>
+        <label class="option"><input type="radio" name="amount" value="25"><span class="option-content"><strong>€25</strong></span></label>
+        <label class="option"><input type="radio" name="amount" value="50"><span class="option-content"><strong>€50</strong></span></label>
+        <label class="option"><input type="radio" name="amount" value="custom" aria-controls="custom-amount-field"><span class="option-content"><strong>Another amount</strong></span></label>
+      </div></fieldset>
+      <section id="custom-amount-field" hidden><label class="field-label" for="custom-amount">Donation amount in EUR</label><input id="custom-amount" type="number" inputmode="decimal" min="1" max="100000" step="0.01" placeholder="€" aria-describedby="amount-help" disabled><p class="hint" id="amount-help">Enter €1 to €100,000, with up to two decimal places. Preview limits may change before donations are available.</p></section>
+      <fieldset><legend>02. Future payment options</legend><p class="hint">Planned options only. Providers and availability are not confirmed.</p><div class="payment-methods">
+        <label class="option"><input type="radio" name="method" value="card" checked><span class="option-content"><strong>Debit or credit card</strong><small>Planned · provider not connected</small></span></label>
+        <label class="option"><input type="radio" name="method" value="bank"><span class="option-content"><strong>Bank payment</strong><small>Planned · availability to be confirmed</small></span></label>
+        <label class="option"><input type="radio" name="method" value="crypto" aria-controls="crypto-options"><span class="option-content"><strong>Cryptocurrency</strong><small>Explore planned currencies and networks</small></span></label>
+      </div></fieldset>
+      <fieldset id="crypto-options" hidden disabled><legend>Choose a cryptocurrency</legend><p class="hint">Planned options only. No wallet address or payment request is generated.</p><div class="payment-methods">
+        <label class="option"><input type="radio" name="crypto" value="solana-usdc" checked><span class="option-content"><strong>USDC</strong><small>Solana network</small></span></label>
+        <label class="option"><input type="radio" name="crypto" value="solana-eurc"><span class="option-content"><strong>EURC</strong><small>Solana network</small></span></label>
+        <label class="option"><input type="radio" name="crypto" value="ethereum-usdc"><span class="option-content"><strong>USDC</strong><small>Ethereum network</small></span></label>
+        <label class="option"><input type="radio" name="crypto" value="monero"><span class="option-content"><strong>Monero (XMR)</strong><small>Monero network</small></span></label>
+        <label class="option"><input type="radio" name="crypto" value="bitcoin"><span class="option-content"><strong>Bitcoin (BTC)</strong><small>Bitcoin network</small></span></label>
+      </div></fieldset>
+      <section id="crypto-estimate" class="estimate-card" hidden aria-labelledby="estimate-heading">
+        <h3 id="estimate-heading">Your eight-minute estimate.</h3>
+        <p id="estimate-amount" class="estimate-amount">No estimate yet.</p><p id="estimate-rate" class="hint"></p><p id="estimate-timer" class="hint" role="timer" aria-live="off"></p><p id="estimate-status" class="hint" role="status" aria-live="polite"></p>
+        <button id="refresh-estimate" class="button small" type="button">Get live estimate</button>
+        <p class="hint">CoinGecko supplies market rates. Your browser contacts it when you choose crypto, change the amount or request a new estimate, exposing your IP address. The estimate is frozen for eight minutes, not a reserved exchange rate. Network fees, provider charges and price changes are not covered. No donation is accepted.</p>
+      </section>
+    </form>
+    <aside class="order-card" aria-label="Donation preview">
+      <span class="plus-badge">Support Ken</span><h2>A little help, at a glance.</h2>
+      <dl><div><dt>Contribution</dt><dd id="summary-plan">One-time donation</dd></div><div><dt>Payment option</dt><dd id="summary-method">Card (planned)</dd></div><div class="total"><dt>Amount</dt><dd id="summary-price">€5.00 once</dd></div></dl>
+      <p class="hint" id="summary-detail">Donation preview only. Nothing will be charged.</p>
+      <button class="button" type="submit" form="donation-preview" id="donation-check" disabled>Check availability <span aria-hidden="true">↗</span></button>
+      <p id="preview-status" class="hint" role="status" aria-live="polite"></p>
+      <p class="hint">Preview only. Nothing is charged or submitted. Donations do not provide Ken+ benefits.</p>
+      <a class="text-link" href="legal.html#privacy">Read the privacy overview <span aria-hidden="true">↗</span></a>
+    </aside>
+  </div>
+</main>
+<footer class="wrap footer"><div><a class="brand" href="./"><img src="ken-logo.png" width="30" height="30" alt="">Ken</a><p>A little closer. A lot more private.</p></div><nav aria-label="Footer"><a href="./">Home</a><a href="ken-plus.html">Ken+</a><a href="legal.html#privacy">Privacy</a><a href="legal.html#terms">Terms</a><a href="legal.html#safety">Support</a></nav><p class="footer-note">Development preview. Operator registration, public service address and consumer disclosures remain pending. Donations are not currently accepted.</p></footer>
+</body>
+</html>
