@@ -48,6 +48,10 @@
 .phone-composer{display:flex;align-items:center;gap:7px;margin-top:18px;color:var(--wine)}
 .phone .phone-compose{flex:1;min-width:0;margin:0;gap:8px;padding:10px}
 .phone-composer .send-icon{flex-shrink:0}
+.outgoing-message{display:flex;flex-direction:column;align-items:flex-end;margin:16px 0}
+.phone .outgoing-message .outgoing{margin:0}
+.message-receipt{font-size:7px;color:var(--muted);padding:4px 8px 0}
+.message-receipt span{color:var(--teal)}
 .menu-button{color:var(--wine-dark);white-space:nowrap;flex-shrink:0;align-items:center;gap:10px;min-height:44px}
 .menu-button::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);margin-top:-4px}
 .menu-button[aria-expanded=true]::after{transform:rotate(225deg);margin-top:4px}
