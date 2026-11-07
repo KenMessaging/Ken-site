@@ -3,64 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore planned ways to support Ken with a one-time donation. Preview only; donations are not yet accepted.">
+  <meta name="description" content="Help Ken and privacy grow. Donate SOL, USDC or EURC on Solana to support an independent messenger without advertising.">
   <meta name="theme-color" content="#8E1B3A">
   <title>Support Ken — A little closer. A lot more private.</title>
   <link rel="icon" href="ken-logo.png" type="image/png">
-  <link rel="stylesheet" href="styles.css?v=20261106-donate">
-  <script src="site.js?v=20261106-donate" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261107-donations">
+  <script src="site.js?v=20261107-donations" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="announcement">A little support goes a long way. <span>Donation preview; payments are not live.</span></div>
-<header class="header"><nav class="wrap navigation" aria-label="Main navigation"><a class="brand" href="./" aria-label="Ken home"><img src="ken-logo.png" width="36" height="36" alt="">Ken</a><button class="menu-button" aria-expanded="false" aria-controls="nav-links">Menu</button><div class="nav-links" id="nav-links"><a href="./">Back to Ken</a><a href="donate.html" aria-current="page">Support Ken</a><a class="plus-link" href="ken-plus.html">Ken+</a></div></nav></header>
+<div class="announcement">Made for conversations, not attention. <span>Ken is in development.</span></div>
+<header class="header"><nav class="wrap navigation" aria-label="Main navigation"><a class="brand" href="./" aria-label="Ken home"><img src="ken-logo.png" width="36" height="36" alt="">Ken</a><button class="menu-button" aria-expanded="false" aria-controls="nav-links">Menu</button><div class="nav-links" id="nav-links"><a href="./#why-ken">Why Ken</a><a href="./#privacy">Privacy</a><a href="./#questions">Questions</a><a href="donate.html">Support Ken</a><a class="plus-link" href="ken-plus.html" aria-label="Ken+">Ken<span aria-hidden="true">+</span></a><a class="button small" href="./#get-ken">Get Ken <span aria-hidden="true">↗</span></a></div></nav></header>
 <main class="wrap" id="main">
   <section class="payment-hero">
     <p class="eyebrow">Help Ken grow.</p>
-    <h1>A little support.<br>A lot of <em>heart.</em></h1>
-    <p class="intro">If you'd like to help support Ken, you can explore the planned options for a one-time donation here. Thank you for being part of the journey.</p>
-    <p class="notice"><strong>Preview only.</strong> Donations are not available yet. No payment provider or wallet is connected, and nothing on this page charges or submits a payment.</p>
+    <h1>Help Ken grow.<br>Help privacy <em>grow.</em></h1>
+    <p class="intro">Ken is being built for people who believe their conversations should stay theirs. Your support gives us more room to build, improve and bring privacy to more people—without turning to advertising. It also helps us rely on fewer third parties as we work towards our goal of a Ken that needs none. We're not there yet, but every contribution helps us move closer. Thank you for helping make that possible.</p>
+    <p class="notice"><strong>Your choice, always.</strong> Donations are optional and do not provide Ken+ benefits. SOL, USDC and EURC donations on Solana are available now. Card, bank and other crypto networks are not available yet.</p>
   </section>
   <div class="checkout-grid">
     <form class="checkout-form" id="donation-preview" novalidate>
-      <fieldset><legend>01. Choose an amount</legend><p class="hint">A one-time contribution in euros. This is a preview, not a payment.</p><div class="plans">
-        <label class="option"><input type="radio" name="amount" value="5" checked><span class="option-content"><strong>€5</strong></span></label>
-        <label class="option"><input type="radio" name="amount" value="10"><span class="option-content"><strong>€10</strong></span></label>
+      <fieldset><legend>01. Choose an amount</legend><p class="hint">Choose a one-time contribution. Euro amounts are a guide for crypto donations; send the quantity you choose in your wallet. No exchange-rate service is used.</p><div class="plans">
+        <label class="option"><input type="radio" name="amount" value="1"><span class="option-content"><strong>€1</strong></span></label>
+        <label class="option"><input type="radio" name="amount" value="8" checked><span class="option-content"><strong>€8</strong></span></label>
         <label class="option"><input type="radio" name="amount" value="25"><span class="option-content"><strong>€25</strong></span></label>
-        <label class="option"><input type="radio" name="amount" value="50"><span class="option-content"><strong>€50</strong></span></label>
-        <label class="option"><input type="radio" name="amount" value="custom" aria-controls="custom-amount-field"><span class="option-content"><strong>Another amount</strong></span></label>
+        <label class="option"><input type="radio" name="amount" value="100"><span class="option-content"><strong>€100</strong></span></label>
+        <label class="option"><input type="radio" name="amount" value="custom" aria-controls="custom-amount-field"><span class="option-content"><strong>Custom amount</strong></span></label>
       </div></fieldset>
-      <section id="custom-amount-field" hidden><label class="field-label" for="custom-amount">Donation amount in EUR</label><input id="custom-amount" type="number" inputmode="decimal" min="1" max="100000" step="0.01" placeholder="€" aria-describedby="amount-help" disabled><p class="hint" id="amount-help">Enter €1 to €100,000, with up to two decimal places. Preview limits may change before donations are available.</p></section>
-      <fieldset><legend>02. Future payment options</legend><p class="hint">Planned options only. Providers and availability are not confirmed.</p><div class="payment-methods">
-        <label class="option"><input type="radio" name="method" value="card" checked><span class="option-content"><strong>Debit or credit card</strong><small>Planned · provider not connected</small></span></label>
-        <label class="option"><input type="radio" name="method" value="bank"><span class="option-content"><strong>Bank payment</strong><small>Planned · availability to be confirmed</small></span></label>
-        <label class="option"><input type="radio" name="method" value="crypto" aria-controls="crypto-options"><span class="option-content"><strong>Cryptocurrency</strong><small>Explore planned currencies and networks</small></span></label>
+      <section id="custom-amount-field" hidden><label class="field-label" for="custom-amount">Donation amount guide in EUR</label><input id="custom-amount" type="number" inputmode="decimal" min="1" max="100000" step="0.01" placeholder="€" aria-describedby="amount-help" disabled><p class="hint" id="amount-help">Enter €1 to €100,000, with up to two decimal places. This is an amount guide only; you can send any crypto quantity directly from your wallet.</p></section>
+      <fieldset><legend>02. Choose how to help</legend><p class="hint">Solana-network donations are available now. Other methods are still planned.</p><div class="payment-methods">
+        <label class="option"><input type="radio" name="method" value="card"><span class="option-content"><strong>Debit or credit card</strong><small>Not available yet</small></span></label>
+        <label class="option"><input type="radio" name="method" value="bank"><span class="option-content"><strong>Bank payment</strong><small>Not available yet</small></span></label>
+        <label class="option"><input type="radio" name="method" value="crypto" checked aria-controls="crypto-options"><span class="option-content"><strong>Cryptocurrency</strong><small>Available · Solana network only</small></span></label>
       </div></fieldset>
-      <fieldset id="crypto-options" hidden disabled><legend>Choose a cryptocurrency</legend><p class="hint">Planned options only. No wallet address or payment request is generated.</p><div class="payment-methods">
-        <label class="option"><input type="radio" name="crypto" value="solana-usdc" checked><span class="option-content"><strong>USDC</strong><small>Solana network</small></span></label>
+      <fieldset id="crypto-options"><legend>Choose a cryptocurrency</legend><p class="hint">Use the Solana network for all three currencies. Other networks are not accepted yet.</p><div class="payment-methods">
+        <label class="option"><input type="radio" name="crypto" value="solana-sol" checked><span class="option-content"><strong>Solana (SOL)</strong><small>Solana network</small></span></label>
+        <label class="option"><input type="radio" name="crypto" value="solana-usdc"><span class="option-content"><strong>USDC</strong><small>Solana network</small></span></label>
         <label class="option"><input type="radio" name="crypto" value="solana-eurc"><span class="option-content"><strong>EURC</strong><small>Solana network</small></span></label>
-        <label class="option"><input type="radio" name="crypto" value="ethereum-usdc"><span class="option-content"><strong>USDC</strong><small>Ethereum network</small></span></label>
-        <label class="option"><input type="radio" name="crypto" value="monero"><span class="option-content"><strong>Monero (XMR)</strong><small>Monero network</small></span></label>
-        <label class="option"><input type="radio" name="crypto" value="bitcoin"><span class="option-content"><strong>Bitcoin (BTC)</strong><small>Bitcoin network</small></span></label>
-      </div></fieldset>
-      <section id="crypto-estimate" class="estimate-card" hidden aria-labelledby="estimate-heading">
-        <h3 id="estimate-heading">Your eight-minute estimate.</h3>
-        <p id="estimate-amount" class="estimate-amount">No estimate yet.</p><p id="estimate-rate" class="hint"></p><p id="estimate-timer" class="hint" role="timer" aria-live="off"></p><p id="estimate-status" class="hint" role="status" aria-live="polite"></p>
-        <button id="refresh-estimate" class="button small" type="button">Get live estimate</button>
-        <p class="hint">CoinGecko supplies market rates. Your browser contacts it when you choose crypto, change the amount or request a new estimate, exposing your IP address. The estimate is frozen for eight minutes, not a reserved exchange rate. Network fees, provider charges and price changes are not covered. No donation is accepted.</p>
-      </section>
+      </div>
+      <section class="sol-donation estimate-card" aria-labelledby="sol-heading">
+        <div>
+          <h3 id="sol-heading">Send from your Solana wallet.</h3>
+          <p>No Ken username or login is needed. Use the same address for SOL, USDC or EURC on Solana.</p>
+          <p class="field-label" id="sol-address-label">Donation wallet address</p>
+          <code class="wallet-address" id="sol-address" aria-labelledby="sol-address-label">3RKLeCUEsNkCR3kb5jEFCUy4ccQqXj7axXN7xkZRPPZ6</code>
+          <button class="button small" id="copy-sol-address" type="button" hidden>Copy address</button>
+          <p class="hint" id="sol-copy-status" role="status" aria-live="polite"></p>
+          <p class="hint"><strong>Solana network only.</strong> Check the address, currency and network before sending. Transfers are generally irreversible and network fees apply. Keep some SOL in your wallet for fees when sending tokens.</p>
+          <p class="hint">The QR code contains only the address, not a currency or amount. Your wallet handles the transfer. Transactions are public on the blockchain; donations are not automatically converted to euros or linked to a Ken account.</p>
+        </div>
+        <figure class="wallet-qr"><img src="sol-donation-qr.svg" width="224" height="224" alt="QR code for the Solana donation wallet address shown alongside"><figcaption>Scan with your Solana wallet.</figcaption></figure>
+      </section></fieldset>
     </form>
-    <aside class="order-card" aria-label="Donation preview">
+    <aside class="order-card" aria-label="Donation summary">
       <span class="plus-badge">Support Ken</span><h2>A little help, at a glance.</h2>
-      <dl><div><dt>Contribution</dt><dd id="summary-plan">One-time donation</dd></div><div><dt>Payment option</dt><dd id="summary-method">Card (planned)</dd></div><div class="total"><dt>Amount</dt><dd id="summary-price">€5.00 once</dd></div></dl>
-      <p class="hint" id="summary-detail">Donation preview only. Nothing will be charged.</p>
+      <dl><div><dt>Contribution</dt><dd id="summary-plan">One-time donation</dd></div><div><dt>Payment option</dt><dd id="summary-method">SOL on Solana</dd></div><div class="total"><dt>Amount guide</dt><dd id="summary-price">€8.00 once</dd></div></dl>
+      <p class="hint" id="summary-detail">Send any quantity you choose in your wallet. No automatic conversion or charge.</p>
       <button class="button" type="submit" form="donation-preview" id="donation-check" disabled>Check availability <span aria-hidden="true">↗</span></button>
       <p id="preview-status" class="hint" role="status" aria-live="polite"></p>
-      <p class="hint">Preview only. Nothing is charged or submitted. Donations do not provide Ken+ benefits.</p>
+      <p class="hint">This page does not submit a transfer or collect account details. For crypto donations, use the Solana address shown here.</p>
       <a class="text-link" href="legal.html#privacy">Read the privacy overview <span aria-hidden="true">↗</span></a>
     </aside>
   </div>
 </main>
-<footer class="wrap footer"><div><a class="brand" href="./"><img src="ken-logo.png" width="30" height="30" alt="">Ken</a><p>A little closer. A lot more private.</p></div><nav aria-label="Footer"><a href="./">Home</a><a href="ken-plus.html">Ken+</a><a href="legal.html#privacy">Privacy</a><a href="legal.html#terms">Terms</a><a href="legal.html#safety">Support</a></nav><p class="footer-note">Development preview. Operator registration, public service address and consumer disclosures remain pending. Donations are not currently accepted.</p></footer>
+<footer class="wrap footer"><div><a class="brand" href="./"><img src="ken-logo.png" width="30" height="30" alt="">Ken</a><p>A little closer. A lot more private.</p></div><nav aria-label="Footer"><a href="./">Home</a><a href="ken-plus.html">Ken+</a><a href="legal.html#privacy">Privacy</a><a href="legal.html#terms">Terms</a><a href="legal.html#safety">Support</a></nav><p class="footer-note">Ken remains in development. Operator registration, public service address and consumer disclosures remain pending. Solana-network donations are available; other payment methods are not connected. No tax-deductibility is claimed.</p></footer>
 </body>
 </html>

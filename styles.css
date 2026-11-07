@@ -27,12 +27,27 @@
 }
 .field-label{display:block;font-weight:600;margin-bottom:10px}
 .estimate-card{padding:22px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+.sol-donation{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:center;margin-top:24px}
+.sol-donation h2{font-size:clamp(36px,5vw,52px)}
+.wallet-address{display:block;overflow-wrap:anywhere;font-size:16px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--bg);margin-bottom:16px;user-select:all}
+.wallet-qr{margin:0;text-align:center;justify-self:center}
+.wallet-qr img{display:block;background:#fff;border-radius:12px}
+.wallet-qr figcaption{font-size:12px;color:var(--muted);margin-top:12px}
+@media(max-width:760px){.sol-donation{grid-template-columns:minmax(0,1fr)}.wallet-qr{justify-self:center}}
 .estimate-amount{font-size:clamp(20px,4vw,27px);font-weight:600;overflow-wrap:anywhere}
 .checkout-form section{min-width:0}
 #recipient-username,#custom-amount{box-sizing:border-box;min-width:0;font-size:16px}
 #recipient-username::placeholder{color:#808080;opacity:1}
 #recipient-username,#custom-amount,#prepaid-months{display:block;width:100%;max-width:100%;min-height:48px;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--bg);color:var(--ink);font:inherit;margin-bottom:12px}
 .order-card dd{overflow-wrap:anywhere;min-width:0}
+.phone .chat-header{gap:6px}
+.phone .chat-contact{min-width:0}
+.phone .chat-contact small{font-size:6px;white-space:nowrap}
+.chat-actions{display:flex;gap:8px;margin-left:auto;align-items:center;color:var(--wine)}
+.phone-icon{width:16px;height:16px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.phone-composer{display:flex;align-items:center;gap:7px;margin-top:18px;color:var(--wine)}
+.phone .phone-compose{flex:1;min-width:0;margin:0;gap:8px;padding:10px}
+.phone-composer .send-icon{flex-shrink:0}
 .menu-button{color:var(--wine-dark);white-space:nowrap;flex-shrink:0;align-items:center;gap:10px;min-height:44px}
 .menu-button::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);margin-top:-4px}
 .menu-button[aria-expanded=true]::after{transform:rotate(225deg);margin-top:4px}

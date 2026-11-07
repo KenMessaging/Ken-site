@@ -28,10 +28,70 @@ if (menu && links) {
     }
   });
 }
-const preview = document.querySelector("#plan-preview, #donation-preview");
+const copySolAddress = document.querySelector("#copy-sol-address");
+if (copySolAddress) {
+  copySolAddress.hidden = false;
+  copySolAddress.addEventListener("click", async () => {
+    const address = document.querySelector("#sol-address").textContent.trim();
+    const status = document.querySelector("#sol-copy-status");
+    try {
+      await navigator.clipboard.writeText(address);
+      status.textContent = "Wallet address copied. Send SOL, USDC or EURC on the Solana network only.";
+    } catch {
+      status.textContent = "Could not copy the address. Select and copy the wallet address above manually.";
+    }
+  });
+}
+const donationForm = document.querySelector("#donation-preview");
+if (donationForm) {
+  const customAmount = document.querySelector("#custom-amount");
+  const cryptoOptions = document.querySelector("#crypto-options");
+  const checkButton = document.querySelector("#donation-check");
+  const status = document.querySelector("#preview-status");
+  const currencies = {
+    "solana-sol": "SOL on Solana",
+    "solana-usdc": "USDC on Solana",
+    "solana-eurc": "EURC on Solana"
+  };
+  const renderDonation = () => {
+    const custom = donationForm.elements.namedItem("amount").value === "custom";
+    customAmount.disabled = !custom;
+    document.querySelector("#custom-amount-field").hidden = !custom;
+    const crypto = donationForm.elements.namedItem("method").value === "crypto";
+    cryptoOptions.hidden = !crypto;
+    cryptoOptions.disabled = !crypto;
+    const amount = custom
+      ? (customAmount.value && customAmount.validity.valid ? Number(customAmount.value) : null)
+      : Number(donationForm.elements.namedItem("amount").value);
+    document.querySelector("#summary-price").textContent = amount === null
+      ? "Choose an amount"
+      : `${new Intl.NumberFormat("en", { style: "currency", currency: "EUR" }).format(amount)} once`;
+    document.querySelector("#summary-method").textContent = crypto
+      ? currencies[donationForm.elements.namedItem("crypto").value]
+      : (donationForm.elements.namedItem("method").value === "card" ? "Card (planned)" : "Bank (planned)");
+    document.querySelector("#summary-detail").textContent = crypto
+      ? "Send any quantity you choose in your wallet. The euro amount is a guide, not a quote. No automatic conversion or charge."
+      : "This payment method is not available yet. Nothing will be charged.";
+    checkButton.textContent = crypto ? "View donation address" : "Check availability";
+    checkButton.disabled = false;
+    status.textContent = "";
+    document.querySelector("#sol-copy-status").textContent = "";
+  };
+  donationForm.addEventListener("change", renderDonation);
+  customAmount.addEventListener("input", renderDonation);
+  donationForm.addEventListener("submit", event => {
+    event.preventDefault();
+    if (donationForm.elements.namedItem("method").value === "crypto") {
+      document.querySelector("#sol-address").scrollIntoView({ block: "center" });
+      status.textContent = "Send SOL, USDC or EURC on Solana to the address shown. Choose the quantity in your wallet; this page does not submit a transfer.";
+    } else {
+      status.textContent = "This payment option is not available yet. Nothing was submitted or charged.";
+    }
+  });
+  renderDonation();
+}
+const preview = document.querySelector("#plan-preview");
 if (preview) {
-  const donation = preview.id === "donation-preview";
-  if (donation) document.querySelector("#donation-check").disabled = false;
   const plans = {
     monthly: { name: "Monthly", price: "€8 / month", detail: "€8 per month. Billing is not connected." },
     annual: { name: "Annual", price: "€48 / year", detail: "€48 per year, equivalent to €4 per month. Saves 50% versus 12 monthly payments." }
@@ -49,13 +109,6 @@ if (preview) {
   const subscriptionPlans = document.querySelector("#subscription-plans");
   const months = document.querySelector("#prepaid-months");
   const recipient = document.querySelector("#recipient-username");
-  const customAmount = document.querySelector("#custom-amount");
-  const donationAmount = () => {
-    const choice = preview.elements.namedItem("amount").value;
-    if (choice !== "custom") return Number(choice);
-    if (!customAmount.validity.valid || !customAmount.value) return null;
-    return Number(customAmount.value);
-  };
   const estimateCard = document.querySelector("#crypto-estimate");
   const estimateAmount = document.querySelector("#estimate-amount");
   const estimateRate = document.querySelector("#estimate-rate");
@@ -105,12 +158,7 @@ if (preview) {
     const key = estimateKey;
     const currency = preview.elements.namedItem("crypto").value;
     const coin = coins[currency];
-    const euros = donation ? donationAmount() : prepaidPrice(Number(months.value));
-    if (euros === null) {
-      estimateAmount.textContent = "Enter a valid donation amount.";
-      estimateStatus.textContent = "Choose an amount from €1 to €100,000, with up to two decimal places.";
-      return;
-    }
+    const euros = prepaidPrice(Number(months.value));
     const controller = new AbortController();
     estimateRequest = controller;
     refreshEstimate.disabled = true;
@@ -171,23 +219,13 @@ if (preview) {
     const cryptoSelected = preview.elements.namedItem("method").value === "crypto";
     cryptoOptions.hidden = !cryptoSelected;
     cryptoOptions.disabled = !cryptoSelected;
-    if (!donation) {
-      cryptoDuration.hidden = !cryptoSelected;
-      cryptoDuration.disabled = !cryptoSelected;
-      subscriptionPlans.hidden = cryptoSelected;
-      subscriptionPlans.disabled = cryptoSelected;
-    } else {
-      const customSelected = preview.elements.namedItem("amount").value === "custom";
-      customAmount.disabled = !customSelected;
-      document.querySelector("#custom-amount-field").hidden = !customSelected;
-    }
+    cryptoDuration.hidden = !cryptoSelected;
+    cryptoDuration.disabled = !cryptoSelected;
+    subscriptionPlans.hidden = cryptoSelected;
+    subscriptionPlans.disabled = cryptoSelected;
     const data = new FormData(preview);
     const count = months ? Number(months.value) : null;
-    const amount = donation ? donationAmount() : null;
-    const plan = donation
-      ? { name: "One-time donation", price: amount === null ? "Choose an amount" : `${formatEuro(amount)} once`,
-          detail: "Donation preview only. Nothing will be charged." }
-      : cryptoSelected
+    const plan = cryptoSelected
       ? { name: `${count} prepaid ${count === 1 ? "month" : "months"}`, price: `€${prepaidPrice(count)} once`,
           detail: "One-time prepaid access. No automatic renewal. Payments are not connected." }
       : plans[data.get("plan")];
@@ -199,7 +237,7 @@ if (preview) {
       : methods[data.get("method")];
     document.querySelector("#preview-status").textContent = "";
     estimateCard.hidden = !cryptoSelected;
-    const key = cryptoSelected ? `${data.get("crypto")}:${donation ? amount : count}` : "";
+    const key = cryptoSelected ? `${data.get("crypto")}:${count}` : "";
     if (key !== estimateKey) {
       estimateKey = key;
       clearEstimate();
@@ -207,12 +245,10 @@ if (preview) {
     }
   };
   preview.addEventListener("change", render);
-  if (customAmount) customAmount.addEventListener("input", render);
   preview.addEventListener("submit", (event) => {
     event.preventDefault();
-    document.querySelector("#preview-status").textContent = donation
-      ? "Donations are not available yet. Nothing was submitted or charged."
-      : "Payments are not available. Nothing was submitted, charged or activated.";
+    document.querySelector("#preview-status").textContent =
+      "Payments are not available. Nothing was submitted, charged or activated.";
   });
   render();
   if (recipient) renderRecipient();
