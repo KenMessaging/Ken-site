@@ -1,32 +1,59 @@
 :root{color-scheme:light;--bg:#FBF7F4;--surface:#F3EAE6;--ink:#2A1A1D;--muted:#715E64;--wine:#8E1B3A;--wine-dark:#68132B;--line:#E4D7D1;--teal:#2E7D74;--gold:#E4C891;--radius:28px;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-synthesis:none}
+:root[data-theme=dark]{color-scheme:dark;--bg:#181316;--surface:#261D22;--ink:#F6EDF0;--muted:#C3ADB6;--wine:#EE9FB6;--wine-dark:#F0B0C2;--line:#503A44;--teal:#83CEC0}
+:root[data-theme=dark] .header{background:rgba(24,19,22,.96)}
+:root[data-theme=dark] .announcement,:root[data-theme=dark] .get-section{background:#521329;color:#F6EDF0}
+:root[data-theme=dark] .button,:root[data-theme=dark] .send-icon{background:#9E294C;color:#fff}
+:root[data-theme=dark] .button:hover{background:#B0395E}
+:root[data-theme=dark] .button.light{background:#F6EDF0;color:#68132B}
+:root[data-theme=dark] .button.light:hover{background:#EADBD4;color:#68132B!important}
+:root[data-theme=dark] .plus-link,:root[data-theme=dark] ::selection{color:#2A1A1D}
+:root[data-theme=dark] .hero-art{background:#302129}
+:root[data-theme=dark] .art-orbit{border-color:#61414E}
+:root[data-theme=dark] .phone{border-color:#76515F;box-shadow:0 28px 55px #0006}
+:root[data-theme=dark] .phone-island{background:#76515F}
+:root[data-theme=dark] .outgoing,:root[data-theme=dark] .mini-bubbles span:last-child{background:#4C2938}
+:root[data-theme=dark] .floating-note,:root[data-theme=dark] .mini-bubbles span{background:#30252B}
+:root[data-theme=dark] .lock-icon{background:#243D36}
+:root[data-theme=dark] .feature-icon{border-color:var(--line)}
+:root[data-theme=dark] .feature-controls{background:#202D29}
+:root[data-theme=dark] .feature-community{background:#30232B}
+:root[data-theme=dark] .control-demo,:root[data-theme=dark] .community-demo{background:var(--bg)}
+:root[data-theme=dark] .privacy-section{color:var(--ink)}
+:root[data-theme=dark] .plus-card{background:#30271F;border-color:#66503A}
+:root[data-theme=dark] .price-pair{border-color:#66503A}
+:root[data-theme=dark] .option input:checked+.option-content{background:#432333}
+:root[data-theme=dark] #recipient-username::placeholder{color:#A49A9F}
 @media(prefers-color-scheme:dark){
-  :root{color-scheme:dark;--bg:#181316;--surface:#261D22;--ink:#F6EDF0;--muted:#C3ADB6;--wine:#EE9FB6;--wine-dark:#F0B0C2;--line:#503A44;--teal:#83CEC0}
-  :root .header{background:rgba(24,19,22,.96)}
-  :root .announcement,:root .get-section{background:#521329;color:#F6EDF0}
-  :root .button,:root .send-icon{background:#9E294C;color:#fff}
-  :root .button:hover{background:#B0395E}
-  :root .button.light{background:#F6EDF0;color:#68132B}
-  :root .button.light:hover{background:#EADBD4;color:#68132B!important}
-  :root .plus-link,:root ::selection{color:#2A1A1D}
-  :root .hero-art{background:#302129}
-  :root .art-orbit{border-color:#61414E}
-  :root .phone{border-color:#76515F;box-shadow:0 28px 55px #0006}
-  :root .phone-island{background:#76515F}
-  :root .outgoing,:root .mini-bubbles span:last-child{background:#4C2938}
-  :root .floating-note,:root .mini-bubbles span{background:#30252B}
-  :root .lock-icon{background:#243D36}
-  :root .feature-icon{border-color:var(--line)}
-  :root .feature-controls{background:#202D29}
-  :root .feature-community{background:#30232B}
-  :root .control-demo,:root .community-demo{background:var(--bg)}
-  :root .privacy-section{color:var(--ink)}
-  :root .plus-card{background:#30271F;border-color:#66503A}
-  :root .price-pair{border-color:#66503A}
-  :root .option input:checked+.option-content{background:#432333}
-  :root #recipient-username::placeholder{color:#A49A9F}
+  :root:not([data-theme]){color-scheme:dark;--bg:#181316;--surface:#261D22;--ink:#F6EDF0;--muted:#C3ADB6;--wine:#EE9FB6;--wine-dark:#F0B0C2;--line:#503A44;--teal:#83CEC0}
+  :root:not([data-theme]) .header{background:rgba(24,19,22,.96)}
+  :root:not([data-theme]) .announcement,:root:not([data-theme]) .get-section{background:#521329;color:#F6EDF0}
+  :root:not([data-theme]) .button,:root:not([data-theme]) .send-icon{background:#9E294C;color:#fff}
+  :root:not([data-theme]) .button:hover{background:#B0395E}
+  :root:not([data-theme]) .button.light{background:#F6EDF0;color:#68132B}
+  :root:not([data-theme]) .button.light:hover{background:#EADBD4;color:#68132B!important}
+  :root:not([data-theme]) .plus-link,:root:not([data-theme]) ::selection{color:#2A1A1D}
+  :root:not([data-theme]) .hero-art{background:#302129}
+  :root:not([data-theme]) .art-orbit{border-color:#61414E}
+  :root:not([data-theme]) .phone{border-color:#76515F;box-shadow:0 28px 55px #0006}
+  :root:not([data-theme]) .phone-island{background:#76515F}
+  :root:not([data-theme]) .outgoing,:root:not([data-theme]) .mini-bubbles span:last-child{background:#4C2938}
+  :root:not([data-theme]) .floating-note,:root:not([data-theme]) .mini-bubbles span{background:#30252B}
+  :root:not([data-theme]) .lock-icon{background:#243D36}
+  :root:not([data-theme]) .feature-icon{border-color:var(--line)}
+  :root:not([data-theme]) .feature-controls{background:#202D29}
+  :root:not([data-theme]) .feature-community{background:#30232B}
+  :root:not([data-theme]) .control-demo,:root:not([data-theme]) .community-demo{background:var(--bg)}
+  :root:not([data-theme]) .privacy-section{color:var(--ink)}
+  :root:not([data-theme]) .plus-card{background:#30271F;border-color:#66503A}
+  :root:not([data-theme]) .price-pair{border-color:#66503A}
+  :root:not([data-theme]) .option input:checked+.option-content{background:#432333}
+  :root:not([data-theme]) #recipient-username::placeholder{color:#A49A9F}
 }
+em{font-style:normal}
 .field-label{display:block;font-weight:600;margin-bottom:10px}
 .estimate-card{padding:22px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+.theme-choice{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px}
+.theme-choice select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;min-height:44px;padding:8px 12px}
 .sol-donation{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:center;margin-top:24px}
 .sol-donation h2{font-size:clamp(36px,5vw,52px)}
 .wallet-address{display:block;overflow-wrap:anywhere;font-size:16px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--bg);margin-bottom:16px;user-select:all}

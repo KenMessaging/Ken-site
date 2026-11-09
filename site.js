@@ -1,5 +1,27 @@
 "use strict";
 document.documentElement.classList.add("js");
+const themeControls = document.querySelectorAll("[data-theme-choice]");
+let storedTheme = null;
+try {
+  storedTheme = localStorage.getItem("ken-theme");
+} catch (error) {
+  console.warn("Theme preference is unavailable:", error);
+}
+const setTheme = (choice) => {
+  if (choice === "light" || choice === "dark") document.documentElement.dataset.theme = choice;
+  else delete document.documentElement.dataset.theme;
+  themeControls.forEach(control => { control.value = choice; });
+};
+setTheme(storedTheme === "light" || storedTheme === "dark" ? storedTheme : "system");
+themeControls.forEach(control => control.addEventListener("change", () => {
+  setTheme(control.value);
+  try {
+    if (control.value === "system") localStorage.removeItem("ken-theme");
+    else localStorage.setItem("ken-theme", control.value);
+  } catch (error) {
+    console.warn("Theme preference could not be saved:", error);
+  }
+}));
 const menu = document.querySelector(".menu-button");
 const links = document.querySelector("#nav-links");
 if (menu && links) {
@@ -68,7 +90,7 @@ if (donationForm) {
       : `${new Intl.NumberFormat("en", { style: "currency", currency: "EUR" }).format(amount)} once`;
     document.querySelector("#summary-method").textContent = crypto
       ? currencies[donationForm.elements.namedItem("crypto").value]
-      : (donationForm.elements.namedItem("method").value === "card" ? "Card (planned)" : "Bank (planned)");
+      : (donationForm.elements.namedItem("method").value === "card" ? "Card (preview)" : "Bank (preview)");
     document.querySelector("#summary-detail").textContent = crypto
       ? "Send any quantity you choose in your wallet. The euro amount is a guide, not a quote. No automatic conversion or charge."
       : "This payment method is not available yet. Nothing will be charged.";
@@ -96,7 +118,7 @@ if (preview) {
     monthly: { name: "Monthly", price: "€8 / month", detail: "€8 per month. Billing is not connected." },
     annual: { name: "Annual", price: "€48 / year", detail: "€48 per year, equivalent to €4 per month. Saves 50% versus 12 monthly payments." }
   };
-  const methods = { card: "Card (planned)", bank: "Bank (planned)", crypto: "Crypto (planned)" };
+  const methods = { card: "Card (preview)", bank: "Bank (preview)", crypto: "Crypto (preview)" };
   const cryptocurrencies = {
     "solana-usdc": "USDC on Solana",
     "solana-eurc": "EURC on Solana",
@@ -233,7 +255,7 @@ if (preview) {
     document.querySelector("#summary-price").textContent = plan.price;
     document.querySelector("#summary-detail").textContent = plan.detail;
     document.querySelector("#summary-method").textContent = cryptoSelected
-      ? `${cryptocurrencies[data.get("crypto")]} (planned)`
+      ? `${cryptocurrencies[data.get("crypto")]} (preview)`
       : methods[data.get("method")];
     document.querySelector("#preview-status").textContent = "";
     estimateCard.hidden = !cryptoSelected;
