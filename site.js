@@ -88,13 +88,9 @@ if (donationForm) {
     document.querySelector("#summary-price").textContent = amount === null
       ? "Choose an amount"
       : `${new Intl.NumberFormat("en", { style: "currency", currency: "EUR" }).format(amount)} once`;
-    document.querySelector("#summary-method").textContent = crypto
-      ? currencies[donationForm.elements.namedItem("crypto").value]
-      : (donationForm.elements.namedItem("method").value === "card" ? "Card (preview)" : "Bank (preview)");
-    document.querySelector("#summary-detail").textContent = crypto
-      ? "Send any quantity you choose in your wallet. The euro amount is a guide, not a quote. No automatic conversion or charge."
-      : "This payment method is not available yet. Nothing will be charged.";
-    checkButton.textContent = crypto ? "View donation address" : "Check availability";
+    document.querySelector("#summary-method").textContent = currencies[donationForm.elements.namedItem("crypto").value];
+    document.querySelector("#summary-detail").textContent = "Send any quantity you choose in your wallet. The euro amount is a guide, not a quote. No automatic conversion or charge.";
+    checkButton.textContent = "View donation address";
     checkButton.disabled = false;
     status.textContent = "";
     document.querySelector("#sol-copy-status").textContent = "";
@@ -103,19 +99,15 @@ if (donationForm) {
   customAmount.addEventListener("input", renderDonation);
   donationForm.addEventListener("submit", event => {
     event.preventDefault();
-    if (donationForm.elements.namedItem("method").value === "crypto") {
-      document.querySelector("#sol-address").scrollIntoView({ block: "center" });
-      status.textContent = "Send SOL, USDC or EURC on Solana to the address shown. Choose the quantity in your wallet; this page does not submit a transfer.";
-    } else {
-      status.textContent = "This payment option is not available yet. Nothing was submitted or charged.";
-    }
+    document.querySelector("#sol-address").scrollIntoView({ block: "center" });
+    status.textContent = "Send SOL, USDC or EURC on Solana to the address shown. Choose the quantity in your wallet; this page does not submit a transfer.";
   });
   renderDonation();
 }
 const preview = document.querySelector("#plan-preview");
 if (preview) {
   const plans = {
-    monthly: { name: "Monthly", price: "€8 / month", detail: "€8 per month. Billing is not connected." },
+    monthly: { name: "Monthly", price: "€8 / month", detail: "€8 per month." },
     annual: { name: "Annual", price: "€48 / year", detail: "€48 per year, equivalent to €4 per month. Saves 50% versus 12 monthly payments." }
   };
   const methods = { card: "Card (preview)", bank: "Bank (preview)", crypto: "Crypto (preview)" };
@@ -249,7 +241,7 @@ if (preview) {
     const count = months ? Number(months.value) : null;
     const plan = cryptoSelected
       ? { name: `${count} prepaid ${count === 1 ? "month" : "months"}`, price: `€${prepaidPrice(count)} once`,
-          detail: "One-time prepaid access. No automatic renewal. Payments are not connected." }
+          detail: "One-time prepaid access. No automatic renewal." }
       : plans[data.get("plan")];
     document.querySelector("#summary-plan").textContent = plan.name;
     document.querySelector("#summary-price").textContent = plan.price;
@@ -270,7 +262,7 @@ if (preview) {
   preview.addEventListener("submit", (event) => {
     event.preventDefault();
     document.querySelector("#preview-status").textContent =
-      "Payments are not available. Nothing was submitted, charged or activated.";
+      "This is a plan preview. Nothing was submitted, charged or activated.";
   });
   render();
   if (recipient) renderRecipient();
