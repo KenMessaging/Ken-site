@@ -1,0 +1,17 @@
+{
+  "name": "ken-donations",
+  "main": "donations.mjs",
+  "compatibility_date": "2026-11-11",
+  "workers_dev": true,
+  "triggers": { "crons": ["*/5 * * * *"] },
+  "routes": [
+    { "pattern": "donations.kenmessaging.app", "custom_domain": true }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ken-public-donations",
+      "database_id": "9f8b0ea4-5502-4c67-b65b-04b0e4ca03ab"
+    }
+  ]
+}
