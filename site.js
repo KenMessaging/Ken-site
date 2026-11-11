@@ -157,7 +157,7 @@ if (activity) {
   };
   let loading = false;
   const loadActivity = async () => {
-    if (loading || document.hidden) return;
+    if (loading) return;
     loading = true;
     try {
       const response = await fetch(activity.dataset.endpoint, { credentials: "omit", referrerPolicy: "no-referrer",
@@ -192,8 +192,8 @@ if (activity) {
     } finally { loading = false; }
   };
   loadActivity();
-  setInterval(loadActivity, 60000);
-  document.addEventListener("visibilitychange", loadActivity);
+  setInterval(() => { if (!document.hidden) loadActivity(); }, 60000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) loadActivity(); });
 }
 const preview = document.querySelector("#plan-preview");
 if (preview) {
