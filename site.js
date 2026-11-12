@@ -89,6 +89,38 @@ if (donationForm) {
     }
   });
   renderMemo();
+  const donationSender = document.querySelector("#donation-sender");
+  const saveName = document.querySelector("#save-donation-name");
+  const nameStatus = document.querySelector("#donation-name-status");
+  const endpoint = document.querySelector("#donation-activity")?.dataset.endpoint;
+  if (endpoint) {
+    saveName.hidden = false;
+    saveName.addEventListener("click", async () => {
+      const name = donationName.value.trim();
+      const address = donationSender.value.trim();
+      if (!name || [...name].length > 40 || /[\p{Cc}\p{Cf}]/u.test(name)) {
+        nameStatus.textContent = "Enter a name of up to 40 visible characters.";
+        return;
+      }
+      if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)) {
+        nameStatus.textContent = "Enter the Solana address you send from.";
+        return;
+      }
+      saveName.disabled = true;
+      nameStatus.textContent = "Saving...";
+      try {
+        const response = await fetch(endpoint, { method: "POST", credentials: "omit", referrerPolicy: "no-referrer",
+          headers: { "Content-Type": "application/json" }, body: JSON.stringify({ address, name }),
+          signal: AbortSignal.timeout(15000) });
+        const data = await response.json().catch(() => ({}));
+        nameStatus.textContent = response.ok
+          ? "Name saved. It will appear next to donations from this address."
+          : typeof data.error === "string" ? data.error : "Could not save the name. Please try again later.";
+      } catch {
+        nameStatus.textContent = "Could not save the name. Please try again later.";
+      } finally { saveName.disabled = false; }
+    });
+  }
   const customAmount = document.querySelector("#custom-amount");
   const cryptoOptions = document.querySelector("#crypto-options");
   const checkButton = document.querySelector("#donation-check");

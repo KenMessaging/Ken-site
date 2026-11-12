@@ -27,7 +27,33 @@ export function decodeMemo(instruction) {
   catch { return null; }
   if (!text.startsWith("Ken donation: ")) return null;
   const name = text.slice(14).trim();
-  return name.length > 0 && [...name].length <= 40 && !/[\p{Cc}\p{Cf}]/u.test(name) ? name : null;
+  return validName(name) ? name : null;
+}
+
+function base58Length(text) {
+  let number = 0n;
+  for (const character of text) {
+    const digit = alphabet.indexOf(character);
+    if (digit < 0) return -1;
+    number = number * 58n + BigInt(digit);
+  }
+  let length = 0;
+  while (number > 0n) { length++; number >>= 8n; }
+  for (const character of text) { if (character !== "1") break; length++; }
+  return length;
+}
+
+export function validName(name) {
+  return typeof name === "string" && name.length > 0 && [...name].length <= 40 && !/[\p{Cc}\p{Cf}]/u.test(name);
+}
+
+export function parseClaim(body) {
+  if (!body || typeof body !== "object") return null;
+  const address = typeof body.address === "string" ? body.address.trim() : "";
+  const name = typeof body.name === "string" ? body.name.trim() : "";
+  if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address) || base58Length(address) !== 32 || address === wallet ||
+      !validName(name)) return null;
+  return { address, name };
 }
 
 export function donationsFrom(transaction) {
@@ -152,11 +178,14 @@ export async function snapshot(db) {
     db.prepare("SELECT updated_at, caught_up, error FROM sync_state WHERE id = 1"),
     db.prepare("SELECT COUNT(*) AS count FROM donations WHERE eur_micros IS NULL"),
     db.prepare(
-      "SELECT signature, sender, name, symbol, amount, timestamp, eur_micros FROM donations ORDER BY timestamp DESC, signature DESC, transfer_index DESC LIMIT 10"
+      `SELECT d.signature, d.sender, COALESCE(d.name, c.name) AS name, d.symbol, d.amount, d.timestamp, d.eur_micros
+       FROM donations d LEFT JOIN claims c ON c.sender = d.sender
+       ORDER BY d.timestamp DESC, d.signature DESC, d.transfer_index DESC LIMIT 10`
     ),
     db.prepare(
       `SELECT d.sender, SUM(d.eur_micros) AS eur_micros,
-        (SELECT n.name FROM donations n WHERE n.sender = d.sender AND n.name IS NOT NULL ORDER BY n.timestamp DESC, n.signature DESC LIMIT 1) AS name
+        COALESCE((SELECT n.name FROM donations n WHERE n.sender = d.sender AND n.name IS NOT NULL ORDER BY n.timestamp DESC, n.signature DESC LIMIT 1),
+          (SELECT c.name FROM claims c WHERE c.sender = d.sender)) AS name
        FROM donations d GROUP BY d.sender ORDER BY eur_micros DESC, d.sender LIMIT 3`
     )
   ]);
@@ -167,6 +196,28 @@ export async function snapshot(db) {
     pendingPrices: pending.count, recent: recent.results, top: complete ? totals.results : [] };
 }
 
+async function claim(request, env, headers) {
+  const reply = (status, body) => new Response(JSON.stringify(body), { status, headers });
+  if (env.CLAIM_LIMIT) {
+    const { success } = await env.CLAIM_LIMIT.limit({ key: request.headers.get("CF-Connecting-IP") ?? "unknown" });
+    if (!success) return reply(429, { error: "Too many attempts. Please try again in a minute." });
+  }
+  const text = await request.text();
+  let body = null;
+  try { if (text.length <= 1024) body = JSON.parse(text); } catch {}
+  const parsed = parseClaim(body);
+  if (!parsed) return reply(400, { error: "Enter a valid Solana address and a name of up to 40 characters." });
+  try {
+    const result = await env.DB.prepare("INSERT OR IGNORE INTO claims (sender, name, created_at) VALUES (?, ?, ?)")
+      .bind(parsed.address, parsed.name, Math.floor(Date.now() / 1000)).run();
+    if (result.meta.changes !== 1) return reply(409, { error: "A name is already saved for this address." });
+    return reply(201, { saved: true });
+  } catch {
+    console.error("Could not save a donation name.");
+    return reply(503, { error: "Could not save the name. Please try again later." });
+  }
+}
+
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("Origin");
@@ -174,8 +225,13 @@ export default {
     const headers = { "Content-Type": "application/json", "Cache-Control": "public, max-age=30",
       "X-Content-Type-Options": "nosniff", Vary: "Origin", ...(allowed.has(origin) ? { "Access-Control-Allow-Origin": origin } : {}) };
     if (new URL(request.url).pathname !== "/") return new Response('{"error":"Not found"}', { status: 404, headers });
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: { ...headers, "Access-Control-Allow-Methods": "GET, HEAD, POST",
+        "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Max-Age": "86400" } });
+    }
+    if (request.method === "POST") return claim(request, env, { ...headers, "Cache-Control": "no-store" });
     if (!["GET", "HEAD"].includes(request.method)) return new Response('{"error":"Method not allowed"}',
-      { status: 405, headers: { ...headers, Allow: "GET, HEAD" } });
+      { status: 405, headers: { ...headers, Allow: "GET, HEAD, POST" } });
     try {
       return new Response(request.method === "HEAD" ? null : JSON.stringify(await snapshot(env.DB)), { headers });
     } catch {

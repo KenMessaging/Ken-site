@@ -28,3 +28,8 @@ CREATE TABLE IF NOT EXISTS sync_state (
   lease_until INTEGER NOT NULL DEFAULT 0
 );
 INSERT OR IGNORE INTO sync_state (id) VALUES (1);
+CREATE TABLE IF NOT EXISTS claims (
+  sender TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  created_at INTEGER NOT NULL
+);

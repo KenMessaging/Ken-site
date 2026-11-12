@@ -9,7 +9,7 @@
   <title>Support Ken — A little closer. A lot more private.</title>
   <link rel="icon" href="ken-logo.png" type="image/png">
   <link rel="stylesheet" href="styles.css?v=20261111">
-  <script src="site.js?v=20261111.1" defer></script>
+  <script src="site.js?v=20261112" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -34,8 +34,12 @@
       <section>
         <label class="field-label" for="donation-name">Public donation name (optional)</label>
         <input id="donation-name" type="text" maxlength="40" autocomplete="off" aria-describedby="donation-name-help">
-        <p class="hint" id="donation-name-help">Add a name to your wallet's transaction memo using the text below. Without a name, your sending address can be shown. Names, addresses and amounts are public on the blockchain and cannot be erased. Do not include private information. Public names are not verified identities.</p>
-        <p class="hint">Transaction memo: <code id="donation-memo">Ken donation</code></p>
+        <label class="field-label" for="donation-sender">Solana address you will send from</label>
+        <input id="donation-sender" type="text" maxlength="44" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="donation-name-help">
+        <p class="hint" id="donation-name-help">Save your name with the address you send from, before or after donating. Your name then appears next to donations from that address. Each address can only be named once. Without a name, your sending address is shown. Names are public and not verified. Do not include private information.</p>
+        <button class="button small" id="save-donation-name" type="button" hidden>Save name</button>
+        <p class="hint" id="donation-name-status" role="status" aria-live="polite"></p>
+        <p class="hint">If your wallet supports memos, you can add this instead: <code id="donation-memo">Ken donation</code></p>
         <button class="button small" id="copy-donation-memo" type="button" hidden>Copy memo</button>
         <p class="hint" id="donation-memo-status" role="status" aria-live="polite"></p>
       </section>
@@ -73,7 +77,7 @@
   </div>
   <section id="donation-activity" data-endpoint="https://donations.kenmessaging.app/" aria-labelledby="donation-activity-heading">
     <h2 id="donation-activity-heading">People helping Ken grow.</h2>
-    <p>Direct SOL, USDC and EURC donations on Solana are read from finalized blockchain transactions. Add the memo above to show a public name; otherwise your sending address is shown. Names are unverified.</p>
+    <p>Direct SOL, USDC and EURC donations on Solana are read from finalized blockchain transactions. Save a name with your sending address above to show it here; otherwise your sending address is shown. Names are unverified.</p>
     <p class="hint">The top three are ranked by cumulative estimated EUR value per sending address, using historical market prices near each donation's hour. These are estimates, not amounts converted to euros. Swaps and unsupported program transfers are not included. Activity refreshes every minute; blockchain indexing runs every five minutes. Price data: <a href="https://www.coingecko.com/en/api" rel="noreferrer">CoinGecko</a>.</p>
     <p id="donation-activity-status" role="status" aria-live="polite">Loading donation activity...</p>
     <noscript><p>Enable JavaScript to load public donation activity.</p></noscript>
