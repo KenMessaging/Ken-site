@@ -63,7 +63,7 @@ em{font-style:normal}
 @media(max-width:760px){.sol-donation{grid-template-columns:minmax(0,1fr)}.wallet-qr{justify-self:center}}
 .estimate-amount{font-size:clamp(20px,4vw,27px);font-weight:600;overflow-wrap:anywhere}
 .checkout-form section{min-width:0}
-.checkout-form #donation-name{display:block;width:100%;min-height:48px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);font:inherit}
+.checkout-form #donation-name,.checkout-form #donation-sender{box-sizing:border-box;margin-bottom:12px;display:block;width:100%;min-height:48px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);font:inherit}
 #recipient-username,#custom-amount{box-sizing:border-box;min-width:0;font-size:16px}
 #recipient-username::placeholder{color:#808080;opacity:1}
 #recipient-username,#custom-amount,#prepaid-months{display:block;width:100%;max-width:100%;min-height:48px;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--bg);color:var(--ink);font:inherit;margin-bottom:12px}
